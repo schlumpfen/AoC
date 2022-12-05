@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:nsd="https://structorizer.fisch.lu" version="3.32-11" preRepeat="bis" postFor="bis" preReturn="zurück" postForIn="in" preWhile="solange" output="Output" input="Input" preAlt="wenn" preFor="für" preExit="beende" preLeave="verlasse" ignoreCase="true" preThrow="eskaliere" preForIn="für alle" stepFor="Schritt" namespace="" author="stefa" created="2022-12-04" changed="2022-12-04" origin="Structorizer 3.32-11" text="&#34;AoC_TAG&#34;" comment="" color="ffffff" type="program" style="nice">
+	<children>
+		<instruction text="&#34;debug := false&#34;" comment="&#34;Wenn debug dann test.txt öffnen sonst input.txt&#34;" color="ffffff" rotated="0" disabled="0"></instruction>
+		<call text="&#34;liste := einlesen(debug)&#34;" comment="&#34;Inputdatei einlesen&#34;" color="ffffff" disabled="0" ismethoddecl="0"></call>
+		<alternative text="&#34;length(liste) = 0&#34;" comment="&#34;Wenn keine Elemente eingelesen wurden abbrechen&#34;" color="ffffff" disabled="0">
+			<qTrue>
+				<jump text="&#34;zurück&#34;" comment="" color="ffffff" disabled="0"></jump>
+			</qTrue>
+			<qFalse color="ffffff">
+			</qFalse>
+		</alternative>
+		<instruction text="&#34;OUTPUT liste&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+	</children>
+</root>
