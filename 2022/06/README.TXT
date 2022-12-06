@@ -6,9 +6,9 @@ alles, was er/sie wissen muss. Üblicherweise sollte der Kommentar
 zumindest die folgenden Angaben umfassen:
 ------------------------------------------------------------------------
 
-PROJEKTBEZEICHNUNG: 		Loesungen zu Advent of Code
-PROJEKTZWECK: 			Tagesaufgaben loesen
-VERSION oder DATUM: 		202212XX
+PROJEKTBEZEICHNUNG:             Loesungen zu Advent of Code
+PROJEKTZWECK:                   Tagesaufgaben loesen
+VERSION oder DATUM:             20221206
 WIE IST DAS PROJEKT ZU STARTEN: Objekt der Klasse erzeugen
-AUTOR(EN): 			Stefan Roschewitz
-BENUTZERHINWEISE: 		Keine
+AUTOR(EN):                      Stefan Roschewitz
+BENUTZERHINWEISE:               Keine
