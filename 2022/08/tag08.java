@@ -5,7 +5,7 @@ public class tag08
 {
     ArrayList<String> liste = new ArrayList<String>();
     ArrayList<Stack>  stapel = new ArrayList<Stack>();
-    int[][] forest = new int[5][5];
+    int[][] wald;
     Hashtable<Character, Character> ht1 = new Hashtable<>();
     
     public tag08()
@@ -19,120 +19,81 @@ public class tag08
             ioe.printStackTrace();
         }
         
-        forest = new int[liste.size()][liste.size()];
-        
-        String[] paare, vorne, hinten;
-        String temp="",teil="";
-        int j=0;
-        for (String element : liste){
-            for(int i=0;i<element.length();i++)
-            {
-                forest[j][i] = Integer.parseInt(element.substring(i,i+1));            
+        wald = new int[liste.size()][liste.size()];
+        for(int i = 0; i < wald.length; i++) {
+            String s = liste.get(i);
+            for(int j = 0; j < s.length(); j++) {
+                wald[i][j] = Integer.parseInt(s.substring(j,j+1));
             }
-            j++;
         }
-
-        
         
         starone();
-        // startwo();
+        startwo();
     }
     void starone(){
-        int wert=forest[0].length*4-4;
-        boolean found=false;
-        for(int i=1;i < forest[0].length-1;i++)
-        {
-            for(int j=1;j < forest[i].length-1;j++)
-            {
-                // Alle Zeilen uns Spalten
-                // Von hier nach oben/unten/rechts/links schauen
-                // Wenn man bis zum Rand kommt dann zählen
-                
-                // nach oben 
-                
-                found=false;
-                for(int o=j-1;o>=0;o--){
-                    if(forest[i][j] <= forest[o][j])
-                    {
-                        found = false;
-                        System.out.println("o  "+i+" "+j+ " " +forest[i][j]);
-                        break;
-                    }
-                    found = true;
-                }
-                if(found){
-                    wert++;    
-                }
-                else{
-                    // nach unten
-                    found=false;
-                    for(int o=j;o<forest[i].length;o++){
-                        if(forest[i][j] <= forest[o][j])
-                        {
-                            found = false;
-                            System.out.println("u  "+i+" "+j+ " " +forest[i][j]);
-                            break;
-                        }
-                        found = true;
-                    }
-                    if(found){
-                        wert++;    
-                    }
-                    else{
-                        // links
-                        found=false;
-                        for(int o=i;o<forest[i].length;o++){
-                            if(forest[i][j] <= forest[i][o])
-                            {
-                                found = false;
-                                System.out.println("l  "+i+" "+j+ " " +forest[i][j]);
-                                break;
-                            }
-                            found = true;
-                        }
-                        if(found){
-                            wert++;    
-                        }
-                        else{
-                            // rechts
-                            found=false;
-                            for(int o=i-1;o>=0;o--){
-                                if(forest[i][j] <= forest[i][o])
-                                {
-                                    found = false;
-                                    System.out.println("r  "+i+" "+j+ " " +forest[i][j]);
-                                    break;
-                                }
-                                found = true;
-                            }
-                            if(found){
-                                wert++;    
-                            }
-                        }
-                    }
+        int sichtbar = 0;
+        Punkt[] RICHTUNG = new Punkt[] {Punkt.HOCH, Punkt.RUNTER, Punkt.LINKS, Punkt.RECHTS};
+        for(int i = 0; i < wald.length; i++) {
+            for(int j  = 0; j < wald[i].length; j++) {
+                int aktuellHoehe = wald[i][j];
+                // Teile am Rand immer sichtbar
+                if(i == 0 || j == 0 || i == wald.length - 1 || j == wald[i].length - 1) {
+                    sichtbar++;
+                    continue;
                 }
                 
-                // System.out.print(forest[i][j]);
-                
-                
-            }   
-            System.out.println();
-        }        
-        
-        
-        System.out.print("Stern Eins: "+wert);        
+                sprung:
+                for(Punkt richt : RICHTUNG) {
+                    Punkt aktuell = new Punkt(i,j);
+                    // In die erste Richtung
+                    aktuell.dazu(richt);
+                    // erste und letze Punkte ignorieren
+                    while(aktuell.x > -1 && aktuell.y > -1 && aktuell.x < wald.length && aktuell.y < wald[i].length) {
+                        // Wenn zu klein  dann nächste
+                        if(wald[aktuell.x][aktuell.y] >= aktuellHoehe) {
+                            continue sprung;
+                        }
+                        // weiter in die Richtung
+                        aktuell.dazu(richt);
+                    }
+                    // groß genug, sichtbar!
+                    sichtbar++;
+                    break;
+                }
+            }
+        }
+        System.out.println("Teil 1:"+Integer.toString(sichtbar));     
     }
     
-    
     void startwo(){
-        int gesamtwert = 0;
-        int wert = 0;
-        String[] paare, vorne, hinten, temp;
-        for (String element : liste){
-            paare =   element.split(" ");
-
+        long topschoen = 0;
+        Punkt[] RICHTUNG = new Punkt[] {Punkt.HOCH, Punkt.RUNTER, Punkt.LINKS, Punkt.RECHTS};
+        for(int i = 0; i < wald.length; i++) {
+            for(int j  = 0; j < wald[i].length; j++) {
+                int aktuellHoehe = wald[i][j];
+                long schoen = 1;
+                inner:
+                for(Punkt richt : RICHTUNG) {
+                    long dist = 0;
+                    Punkt aktuell = new Punkt(i,j);
+                     // In die erste Richtung
+                    aktuell.dazu(richt);
+                    // erste und letze Punkte ignorieren
+                    while(aktuell.x > -1 && aktuell.y > -1 && aktuell.x < wald.length && aktuell.y < wald[i].length) {
+                        dist++;
+                        // abbruch wenn zu klein
+                        if(wald[aktuell.x][aktuell.y] >= aktuellHoehe) {
+                            break;
+                        }
+                        // move in direction
+                        aktuell.dazu(richt);
+                    }
+                    schoen *= dist;
+                }
+                topschoen = Math.max(schoen,topschoen);
+            }
         }
-        System.out.print("Stern Zwei: ");        
+        System.out.println("Teil 2: " + Long.toString(topschoen)); 
     }
     
     
@@ -142,7 +103,7 @@ public class tag08
        BufferedReader br = new BufferedReader(new FileReader(file));
        while ((st = br.readLine()) != null){
            liste.add(st);
-           System.out.println(st);      
+           // System.out.println(st);      
         }
     }
 }
