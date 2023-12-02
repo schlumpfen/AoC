@@ -1,8 +1,5 @@
 # Advent of Code
 
-**Nette Programmieraufgaben als Adventskalender**
+Jedes Jahr eine **nette Programmieraufgaben als Adventskalender** bei der ich immer versuche mitzumachen. \
 
-Die Aufgaben versuche ich mit Java (BlueJ) zu lösen und auch Struktogramme zu erstellen.
-
-Für jeden Tag wird ein Unterordner erstellt.
-In dem Verzeichnis gibt es eine Datei input.txt mit dem jeweiligen Rätsel Input und eine Datei test.txt mit den Testdaten.
+Im Jahr **2023** versuche ich die Aufgaben mit DART als Programmiersprache zu lösen.
