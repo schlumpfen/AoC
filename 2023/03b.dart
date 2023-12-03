@@ -9,7 +9,7 @@ void main() async {
     var filePath = Platform.script.pathSegments.last[0]+Platform.script.pathSegments.last[1]+'.txt';
     
     var gesamt1 =0;
-//  var gesamt2 =0;
+    var gesamt2 =0;
     
     
     /*
@@ -56,18 +56,52 @@ void main() async {
           }
       }
       // Ist strZahl noch gefüllt?
-      if (strZahl.length>0 && istNachbarSybol(strZahl, schematic, i, j-1)) {
-        gesamt1 += int.parse(strZahl);
+      if(strZahl.length>0){
+        if(istNachbarSybol(strZahl, schematic, i, j-1)){
+          // i,j müsste feld danach sein wo keine Ziffer steht.
+          gesamt1 += int.parse(strZahl);
+        }
       }
     }
 	  print("Teil 1: "+gesamt1.toString());
 
+     // Zeile für Zeile
+    for (i = 0; i < schematic.length; i++) {
+      for (j = 0; j < schematic[i].length; j++) {
+        if(schematic[i][j]!='*'){
+          gesamt2 += erstelleProdukt(schematic,i,j);
+        }
+      }
+    }
+    print("Teil 2: "+gesamt2.toString());
+
+
   } catch (e) {
     print('Fehler beim Lesen der Datei: $e');
   }
+  
 }
-
-
+int erstelleProdukt(List<List<String>> schematic, int i, int j)
+{
+  // Teste Bereich um * 
+  // abc
+  // d*e
+  // fgh
+  // testen ob Bereich geht (* am Rand)
+  // 2 Treffen in abc, d, e, fgh sonst eh egal
+  // bei a,f nach links und rechts schauen
+  // Bis Ende
+  // b,c,e,g,h nur nach rechts
+  // d nur nach links 
+  
+  if(i>0 && j>1) {
+    if(isDigit(schematic[i-1][j-1])||schematic[i-1][j]||schematic[i-1][j+1])
+    {
+      return 1;
+    }
+  }
+  return 0;
+}
 bool istNachbarSybol(String Zahl, List<List<String>> schematic, int i, int j)
 {
   // **Zahl am Zeilenende?** // 
