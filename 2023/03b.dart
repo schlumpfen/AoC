@@ -93,7 +93,6 @@ int erstelleProdukt(List<List<String>> schematic, int i, int j)
   // d nur nach links 
   
   // i = Zeile Start bei 0
-  //  print(i.toString() + " " + j.toString());
   int counter =0;
   var top ='';
   var middle='';
@@ -125,9 +124,13 @@ int erstelleProdukt(List<List<String>> schematic, int i, int j)
     counter+=2;
     print("Beide oben");
     return 2;
-  } else {
-    
+  } else
+    if(isDigit(schematic[i-1][j-1]) && isDigit(schematic[i-1][j]) && isDigit(schematic[i-1][j+1])) {
+    counter++;
+    print("Oben mitte");
   } 
+    
+  
 
   // oben = unten
   // ...->0, ..1->1, .1.->1, .11->1, 1..->1, 11.->1, 111->1, 1.1->2
@@ -136,43 +139,18 @@ int erstelleProdukt(List<List<String>> schematic, int i, int j)
     counter+=2;
     print("Beide unten");
     return 2;
-  } else {
-    
+  } else 
+    if(isDigit(schematic[i+1][j-1]) && isDigit(schematic[i+1][j]) && isDigit(schematic[i+1][j+1])) {
+    counter++;
+    print("Unten mitte");
   } 
 
-  if(counter ==4)
-    print(counter.toString()+" "+i.toString()+ " "+j.toString());
-  /*
-  for(int z=-1;z<2;z++)
-  {
-    for(int s=-1;s<2;s++)
-    {
-      if(schematic[i+z][j+s]!='*'){ 
-        if(isDigit(schematic[i+z][j+s])){
-          top += "1";
-        }
-        stdout.write(schematic[i+z][j+s]);
-      }
-    }
-    print('');
+  if(counter >1){
+    return counter;
   }
-*/
-
-
-
-
-
   
-  
-  /*
-  if(i>0 && j>1) {
-    if(isDigit(schematic[i-1][j-1])||isDigit(schematic[i-1][j])||isDigit(schematic[i-1][j+1]))
-    {
-      return 1;
-    }
-  }
-  */
   return 0;
+  
 }
 
 bool istNachbarSybol(String Zahl, List<List<String>> schematic, int i, int j)
